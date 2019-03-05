@@ -1,0 +1,43 @@
+{% extends 'reception/base.html' %}
+
+{# base.html下的菜单动态加载 #}
+{% block menu %}
+    {% for c in c_list %}
+        <li><a href="#">{{ c.type }}</a>
+                    <ul class="sub-menu">
+                        {% for foo in c.ArticleType %}
+                            <li><a href="#">{{ foo.type_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+
+{# base页面的conten继承 #}
+{% block content %}
+    <div class="span8 main-listing">
+        <article style="min-height: 600px" class="format-standard type-post hentry clearfix">
+
+            <header class="clearfix">
+
+                    <h3 class="post-title">
+                            <a href="single.html">{{ article_msg.art_title }}</a>
+                    </h3>
+                         <div class="post-meta clearfix" id="aid{{ article_msg.aid }}">
+                            <span class="date">{{ article_msg.art_create_date }}</span>
+                            <span class="category"><a href="#" title="作者">{{ article_msg.art_author }}</a></span>
+                            <span class="comments"><a href="#" title="评论">{{ comments_count }} Comments</a></span>
+                            {% if is_lifted%}
+                                <span class="like-lift">{{ article_msg.art_lift }}</span>
+                            {% else %}
+                                <span class="like-count">{{ article_msg.art_lift }}</span>
+                            {% endif %}
+                        </div>
+                   <!-- end of post meta -->
+
+            </header>
+            {{ article_msg.art_content|linebreaks }}
+    </article>
+    </div>
+{% endblock %}

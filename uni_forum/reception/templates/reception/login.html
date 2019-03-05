@@ -1,0 +1,68 @@
+{% extends 'reception/base.html' %}
+
+{# base.html下的菜单动态加载 #}
+{% block menu %}
+    {% for c in c_list %}
+        <li><a href="#">{{ c.type }}</a>
+                    <ul class="sub-menu">
+                        {% for foo in c.ArticleType %}
+                            <li><a href="#">{{ foo.type_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+
+{# 登录界面的content继承 #}
+{% block  content%}
+    <div class="span8 page-content">
+    <article class="type-page hentry clearfix">
+            <h1 class="post-title">
+                    <a href="#">欢迎登录</a>
+            </h1>
+            <hr>
+    </article>
+    <form  class="row" action="{% url "reception_login" %}" method="post">
+
+                        <div class="span1">
+                            {{ login_form.username.label_tag }}
+                        </div>
+                        <div class="span7">
+                                {{ login_form.username }}
+                        </div>
+
+                        <div class="span1">
+                                {{ login_form.password.label_tag }}
+                        </div>
+                        <div class="span7">
+                                 {{ login_form.password }}
+                        </div>
+                         <div class="span1">
+                             {{ login_form.captcha.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ login_form.captcha }}
+                        </div>
+                        <div class="span1"></div>
+                        <div class="span7">
+                            {% if msg %}
+                                <div class="alert alert-danger" style="margin-top: 20px;width: 250px">{{ msg }}</div>
+                            {% endif %}
+                            {% if login_form.captcha.errors %}
+                                <div class="alert alert-danger" style="margin-top: 20px;width: 250px">{{ login_form.captcha.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="span1"></div>
+                        <div class="span7" style="margin-top: 20px">
+                                <input type="submit" name="submit" value="登录" class="btn btn-inverse">
+                                <img src="/media/images/loading.gif" id="contact-loader" alt="Loading...">
+                                <a href="/reception/register/" style="color: #999999;"><span>点击注册</span></a>
+                        </div>
+
+                        <div class="span6 offset2 error-container"></div>
+                        <div class="span8 offset2" id="message-sent"></div>
+
+                </form>
+</div>
+{% endblock %}

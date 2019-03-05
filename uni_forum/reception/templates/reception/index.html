@@ -1,0 +1,102 @@
+{% extends 'reception/base.html' %}
+
+{# base.html下的菜单动态加载 #}
+{% block menu %}
+    {% for c in c_list %}
+        <li><a href="#">{{ c.type }}</a>
+                    <ul class="sub-menu">
+                        {% for foo in c.ArticleType %}
+                            <li><a href="#">{{ foo.type_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+
+{# 首页的content继承 #}
+{% block  content%}
+    <div class="span8 page-content">
+        <!-- Basic Home Page Template -->
+        <div class="row separator">
+            <section class="span4 articles-list">
+                <h3>生活区</h3>
+                <ul class="articles">
+                    {% for foo in live_obj %}
+                        <li class="article-entry standard" id="aid{{ foo.aid }}">
+                                <h4><a href="{% url 'get_article_msg'%}?id={{ foo.aid }}">{{foo.art_title }}</a></h4>
+                                <span class="article-meta">{{ foo.art_create_date }} by <a href="#" title="作者">{{ foo.art_author }}</a></span>
+                                        <span class="like-count">{{ foo.art_lift }}</span>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+                <section class="span4 articles-list">
+                    <h3>学术区</h3>
+                    <ul class="articles">
+                        {% for foo in stu_obj %}
+                            <li class="article-entry standard" id="aid{{ foo.aid }}">
+                                    <h4><a href="{% url 'get_article_msg'%}?id={{ foo.aid }}">{{foo.art_title }}</a></h4>
+                                    <span class="article-meta">{{ foo.art_create_date }} by <a href="#" title="作者">{{ foo.art_author }}</a></span>
+                                    <span class="like-count">{{ foo.art_lift }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+        </div>
+    </div>
+{% endblock %}
+
+{# 首页的sidebar继承 #}
+{% block sidebar %}
+    <aside class="span4 page-sidebar">
+
+        <section class="widget">
+                <div class="quick-links-widget">
+                        <h3 class="title">快速到达</h3>
+                        <ul id="menu-quick-links" class="menu clearfix">
+                                <li><a href="index-2.html">学术区</a></li>
+                                <li><a href="articles-list.html">生活区</a></li>
+                                <li><a href="faq.html">测试区</a></li>
+                                <li><a href="contact.html">校园区</a></li>
+                        </ul>
+                </div>
+        </section>
+
+        <section class="widget">
+            <h3 class="title">热门帖子</h3>
+            <ul class="articles">
+                    <li class="article-entry standard">
+                            <h4><a href="single.html">Integrating WordPress with Your Website</a></h4>
+                            <span class="article-meta">25 Feb, 2013 in <a href="#" title="View all posts in Server &amp; Database">Server &amp; Database</a></span>
+                            <span class="like-count">66</span>
+                    </li>
+                    <li class="article-entry standard">
+                            <h4><a href="single.html">WordPress Site Maintenance</a></h4>
+                            <span class="article-meta">24 Feb, 2013 in <a href="#" title="View all posts in Website Dev">Website Dev</a></span>
+                            <span class="like-count">15</span>
+                    </li>
+                    <li class="article-entry video">
+                            <h4><a href="single.html">Meta Tags in WordPress</a></h4>
+                            <span class="article-meta">23 Feb, 2013 in <a href="#" title="View all posts in Website Dev">Website Dev</a></span>
+                            <span class="like-count">8</span>
+                    </li>
+                    <li class="article-entry image">
+                            <h4><a href="single.html">WordPress in Your Language</a></h4>
+                            <span class="article-meta">22 Feb, 2013 in <a href="#" title="View all posts in Advanced Techniques">Advanced Techniques</a></span>
+                            <span class="like-count">6</span>
+                    </li>
+            </ul>
+        </section>
+
+        </aside>
+{% endblock %}
+
+{# base页面的script继承 #}
+{% block script %}
+{#    /*初始化是否点过赞*/#}
+    {% for foo in lift_obj %}
+        $("#aid{{ foo.aid }} .like-count").removeClass("like-count").addClass("like-lift");
+    {% endfor %}
+{% endblock %}

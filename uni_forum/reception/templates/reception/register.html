@@ -1,0 +1,84 @@
+{% extends 'reception/base.html' %}
+
+{# base.html下的菜单动态加载 #}
+{% block menu %}
+    {% for c in c_list %}
+        <li><a href="#">{{ c.type }}</a>
+                    <ul class="sub-menu">
+                        {% for foo in c.ArticleType %}
+                            <li><a href="#">{{ foo.type_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+
+{# 注册页面的content部分 #}
+{% block  content%}
+<div class="span8 page-content">
+    <article class="type-page hentry clearfix">
+            <h1 class="post-title">
+                    <a href="#">欢迎注册</a>
+            </h1>
+            <hr>
+    </article>
+    <form  class="row" action="{% url "reception_register" %}" method="post">
+            <div class="span1">
+                            {{ register_form.reg_username.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_username }}
+                        </div>
+
+                        <div class="span1">
+                            {{ register_form.reg_sex.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_sex }}
+                        </div>
+                         <div class="span1">
+                             {{ register_form.reg_occupation.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_occupation }}
+                        </div>
+                        <div class="span1">
+                             {{ register_form.reg_userId.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_userId }}
+                        </div>
+                        <div class="span1">
+                             {{ register_form.reg_passwd1.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_passwd1 }}
+                        </div>
+                        <div class="span1">
+                             {{ register_form.reg_passwd2.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_passwd2 }}
+                        </div>
+                        <div class="span1">
+                             {{ register_form.reg_email.label_tag }}
+                        </div>
+                        <div class="span7">
+                            {{ register_form.reg_email }}
+                        </div>
+                        <div class="span1"></div>
+                        <div class="span7">
+                            {% if msg %}
+                                <div class="alert alert-danger " style="margin-top: 20px;width: 250px">{{ msg }}</div>
+                            {% endif %}
+                        </div>
+                <div class="span1"></div>
+                <div class="span7" style="margin-top: 20px">
+                        <input type="submit" name="submit" value="注册" class="btn btn-inverse">
+                        <img src="/media/images/loading.gif" id="contact-loader" alt="Loading...">
+                        <a href="/reception/login/" style="color: #999999;"><span>返回登录</span></a>
+                </div>
+        </form>
+</div>
+{% endblock %}
